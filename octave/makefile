@@ -1,9 +1,13 @@
-LIB = include 
 
-all: exe_arq
+OCTAVE_INCLUDE=C:\Octave\Octave3.6.4_gcc4.6.2\include
 
-exe_arq: main.o
-	g++ -o exe_arq main.o `pkg-config gtkmm-3.0 --cflags --libs` `pkg-config --cflags --libs opencv4`
+all: test
 
-main.o: main.cpp
-	g++ -o main.o main.cpp -c `pkg-config gtkmm-3.0 --cflags --libs` `pkg-config --cflags --libs opencv4` -l /usr/include/octave-5.2.0/octave/mex.h
+clean:
+    -rm test.o test
+
+test: test.o
+    mkoctfile --link-stand-alone -o test test.o
+
+test.o: main.cpp
+    g++ -c -I$(OCTAVE_INCLUDE) -I$(OCTAVE_INCLUDE)\octave-3.6.4 -o test.o main.cpp
