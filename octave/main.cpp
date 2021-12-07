@@ -26,12 +26,15 @@ int main(void)
       return status;
     }
 
+
     //Lista de argumentos para o comando pkg
     octave_value_list load_p;
     load_p(0) = octave_value("load"); //Argumento load
     load_p(1) = octave_value("image"); //Argumento image(Pacote)
 
-    octave::feval("pkg", load_p); //Chama o comando pkg com a lista de argumentos
+
+
+    octave::feval("pkg", load_p,2); //Chama o comando pkg com a lista de argumentos
   
     //Cria um lista de valores
     octave_value_list in;
@@ -39,15 +42,15 @@ int main(void)
 
     //Cria outra lista de saida
     octave_value_list out;
-    out(0) = octave_value(octave::feval("imread", in)); //Executa o comando imread com o a lista de argumentos
+    out(0) = octave_value(octave::feval("imread", in,1)); //Executa o comando imread com o a lista de argumentos
 
-    out(0) = octave_value(octave::feval("rgb2gray",out));
     //octave value list
     octave_value_list imb2w;
     imb2w(0) = octave_value(out(0));
+    imb2w(1) = octave_value(0.5);
 
     //Não funciona
-    out(0) = octave_value(octave::feval("im2bw",octave_value(0.5)));
+    out(0) = octave_value(octave::feval("im2bw",imb2w,1));
   
 
 
